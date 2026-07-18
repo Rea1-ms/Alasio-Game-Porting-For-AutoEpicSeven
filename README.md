@@ -1,4 +1,4 @@
-# alas-game-porting
+# ALAS-Game-Porting-For-AutoEpicSeven
 
 面向 AutoEpicSeven（自动化项目）的 Codex skill（技能），用于开发、移植、审核和调试 ALAS（二代游戏自动化框架）风格的 E7 自动化功能。
 
@@ -13,7 +13,7 @@
 - scheduler（调度器）、配置和 GUI（图形界面）接入
 - 截图测试、实机日志分析和回归检查
 
-本 skill（技能）面向 AutoEpicSeven（自动化项目）开发，不用于 E7 游戏攻略、无关自动化项目或普通 Python（编程语言）问题。
+本 skill（技能）面向 AutoEpicSeven（自动化项目）开发，不涉及 E7 游戏攻略、无关自动化项目或普通 Python（编程语言）问题。
 
 ## 设计目标
 
@@ -26,7 +26,7 @@ skill（技能）已经包含开发所需的状态循环规范、项目约束、
 ## 目录结构
 
 ```text
-alas-game-porting/
+alas-game-porting-for-autoepicseven/
 ├── README.md
 ├── SKILL.md
 ├── agents/
@@ -56,7 +56,7 @@ alas-game-porting/
 将仓库克隆到 Codex（智能编程助手）的 skills（技能）目录：
 
 ```powershell
-git clone <skill-repository-url> "$env:CODEX_HOME/skills/alas-game-porting"
+git clone <skill-repository-url> "$env:CODEX_HOME/skills/alas-game-porting-for-autoepicseven"
 ```
 
 重新启动 Codex（智能编程助手）后即可调用。
@@ -66,11 +66,11 @@ git clone <skill-repository-url> "$env:CODEX_HOME/skills/alas-game-porting"
 在 AutoEpicSeven（自动化项目）根目录执行：
 
 ```powershell
-git submodule add <skill-repository-url> .agents/skills/alas-game-porting
+git submodule add <skill-repository-url> .agents/skills/alas-game-porting-for-autoepicseven
 git submodule update --init --recursive
 ```
 
-`.agents/skills/alas-game-porting` 是 repository skill（仓库级技能）位置。项目会记录 skill（技能）的具体提交，不会自动跟随远端变化。
+`.agents/skills/alas-game-porting-for-autoepicseven` 是 repository skill（仓库级技能）位置。项目会记录 skill（技能）的具体提交，不会自动跟随远端变化。
 
 克隆包含该子模块的项目时使用：
 
@@ -89,7 +89,7 @@ git submodule update --init --recursive
 显式调用：
 
 ```text
-使用 $alas-game-porting，为 AutoEpicSeven 新增一个状态驱动的每日任务。
+使用 $alas-game-porting-for-autoepicseven，为 AutoEpicSeven 新增一个状态驱动的每日任务。
 ```
 
 也可以直接描述 AutoEpicSeven（自动化项目）的 task（任务）、Page（页面对象）、assets（识别资源）、OCR（光学字符识别）、调度或测试问题，由触发描述自动加载本 skill（技能）。

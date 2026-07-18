@@ -1,7 +1,7 @@
 ---
-name: alas-game-porting
+name: alas-game-porting-for-autoepicseven
 description: >
-  Load when the user asks to develop, port, review, debug, or refactor AutoEpicSeven/E7 automation, including tasks, ALAS state loops, pages/routes, assets/button extraction, OCR, server/language dispatch, scheduler/config wiring, or emulator screenshot tests. Also load for explicit $alas-game-porting requests. Do not use for Epic Seven gameplay advice, unrelated automation projects, or generic Python work outside AutoEpicSeven.
+  Load when the user asks to develop, port, review, debug, or refactor AutoEpicSeven/E7 automation, including tasks, ALAS state loops, pages/routes, assets/button extraction, OCR, server/language dispatch, scheduler/config wiring, or emulator screenshot tests. Also load for explicit $alas-game-porting-for-autoepicseven requests. Do not use for Epic Seven gameplay advice, unrelated automation projects, or generic Python work outside AutoEpicSeven.
 ---
 
 # AutoEpicSeven ALAS Game Porting
