@@ -60,6 +60,8 @@
 
 ## Detection Objects
 
+本节只说明识别对象的行为。asset name、文件后缀、目录映射和生成 wrapper 规则见 `asset-task-conventions.md`。
+
 ### Button
 
 - Button 的 area 用于识别，button 用于点击，color 用于平均颜色判断。

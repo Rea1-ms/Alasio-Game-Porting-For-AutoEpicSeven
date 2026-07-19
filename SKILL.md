@@ -19,10 +19,11 @@ Version: 0.1 (2026-07-18)
 
 | 当前工作 | 还要读取 |
 | --- | --- |
-| 新增或重写任务、交互流程 | `references/task-checklist.md`、`references/state-loop-bible.md`、`references/development-lessons.md` |
+| 新增或重写任务、交互流程 | `references/asset-task-conventions.md`、`references/task-checklist.md`、`references/state-loop-bible.md`、`references/development-lessons.md` |
 | 审核状态循环、死循环、点击时序 | `references/state-loop-bible.md`、`references/development-lessons.md` |
 | 新增页面、修改路由、按服务器注册页面 | `references/wiki-guidance.md` 的 Page/UI 与多服务器章节、`references/autoepicseven-rules.md` 的页面与分服章节 |
-| 新增或调整 assets、颜色/模板识别 | `references/wiki-guidance.md` 的识别章节、`references/development-lessons.md` 的识别经验 |
+| 新增或调整 assets、命名、目录或颜色/模板识别 | `references/asset-task-conventions.md`、`references/wiki-guidance.md` 的识别章节、`references/development-lessons.md` 的识别经验 |
+| 定位任务入口、实现文件或 asset 来源 | `references/asset-task-conventions.md` 的入口检索与反向定位章节 |
 | OCR、资源栏、语言问题 | `references/autoepicseven-rules.md` 的 OCR 章节、`references/development-lessons.md` 的 OCR 经验 |
 | 新增任务配置、GUI、调度入口 | `references/task-checklist.md` 的配置章节、`references/wiki-guidance.md` 的配置章节 |
 | 写测试、复现实机日志问题 | `references/autoepicseven-rules.md` 的测试章节、`references/development-lessons.md` |

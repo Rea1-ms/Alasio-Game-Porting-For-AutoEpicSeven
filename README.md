@@ -33,6 +33,7 @@ alas-game-porting-for-autoepicseven/
 │   └── openai.yaml
 └── references/
     ├── autoepicseven-rules.md
+    ├── asset-task-conventions.md
     ├── development-lessons.md
     ├── skill-evals.md
     ├── state-loop-bible.md
@@ -43,6 +44,7 @@ alas-game-porting-for-autoepicseven/
 - `SKILL.md`：触发说明、任务路由、执行默认值和验收清单。
 - `agents/openai.yaml`：Codex 展示名称、简介和默认调用提示。
 - `references/autoepicseven-rules.md`：AutoEpicSeven（自动化项目）的强制开发约束。
+- `references/asset-task-conventions.md`：asset name（资源名）、目录映射、task（任务）组织和入口定位规范。
 - `references/state-loop-bible.md`：ALAS（自动化框架）状态循环完整规范。
 - `references/task-checklist.md`：新增或重写任务时的检查清单。
 - `references/development-lessons.md`：现有模块和实机排错经验。

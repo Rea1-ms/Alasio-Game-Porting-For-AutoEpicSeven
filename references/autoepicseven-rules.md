@@ -78,8 +78,9 @@ self.config.SpecialActivity.GetDailyReward
 
 ## Assets
 
-- assets 的唯一来源是 button extract 流程；源图片放入 `assets/` 或 `tasks/<task>/assets/` 对应目录，再运行生成器。
-- 生成的 `assets_*.py` 只能读取和 import，绝不能手改。
+- asset name、源图目录到 wrapper 的映射、frame/attr 后缀和入口定位以 `asset-task-conventions.md` 为唯一详细来源。
+- assets 的唯一来源是 button extract 流程；源图片只放入仓库根目录的 `assets/`，`tasks/<owner>/assets/` 只存放生成结果。
+- 生成的 `assets_*.py` 只能读取和 import，绝不能手改或放入源图片。
 - 缺省 assets 不要用 `try/except`、动态 getattr 或静默 fallback 隐藏。没有就是没有，漏了就是漏了；明确提醒用户补放源图片。
 - 同名元素只是不同服务器外观不同：在同一个 assets 定义中保留同名 `ButtonWrapper`，不支持的一侧使用 `None`，让页面层保持统一 import。
 - 页面节点只存在于某个服务器：Page 注册、路由连边和入口逻辑都必须按服务器条件分开，不能只分 assets。

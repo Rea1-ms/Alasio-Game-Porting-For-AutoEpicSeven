@@ -9,10 +9,12 @@
 - [ ] 正常完成、今日已完成、资源不足、背包已满和网络异常已区分
 - [ ] 所需 assets、OCR 字段、配置项和调度周期已列出
 - [ ] 已阅读当前任务目录、相似 E7 任务和相关 git diff
+- [ ] scheduler task、snake_case 入口、owner 目录和实际实现链已追踪
 
 ## 2. File Placement
 
-- [ ] 在 `tasks/<task>/` 下创建与功能同名的实现文件
+- [ ] 在 `tasks/<owner>/` 下创建与功能同名的 `<feature>.py`
+- [ ] `entry.py` 只在现有 owner 需要页面进入边界、入口 mixin 或实现分发时使用，不创建空入口层
 - [ ] `run()` 只做编排，具体交互放在可独立测试的方法
 - [ ] assets import 使用 `from ... import ...`
 - [ ] 不修改生成的 `assets_*.py`
@@ -21,7 +23,10 @@
 ## 3. Assets And Detection
 
 - [ ] 截图分辨率为 1280x720
+- [ ] asset name 使用有语义的 `UPPER_SNAKE_CASE`，未包含语言、坐标或截图序号
 - [ ] 通用资源优先放 `share`，差异资源放对应服务器/语言目录
+- [ ] 源图只放在根目录 `assets/`，预期生成 wrapper 路径已按 module 映射确认
+- [ ] 多模板使用 `.2` / `.3`，属性覆盖使用合法 attr 后缀且第一帧存在
 - [ ] 固定位置亮灰判定优先 `match_color()`
 - [ ] 先定位再判色使用 `match_template_color()`
 - [ ] 只判断存在使用 `match_template()` 或 `match_template_luma()`
@@ -100,6 +105,7 @@ def _execute_feature(self, skip_first_screenshot=True):
 - [ ] `default.yaml` / `override.yaml` 按需要更新
 - [ ] `config_manual.py` 中调度优先级合理
 - [ ] 当前任务入口加到 `aes.py`
+- [ ] 已确认 TaskName 经 `inflection.underscore()` 后与 `aes.py` 方法名一致
 - [ ] 配置属性使用 `Group_Argument` 扁平名称
 - [ ] 所有支持语言翻译完整，没有占位路径
 - [ ] 运行 config updater 前已请求用户批准
@@ -131,6 +137,7 @@ def _execute_feature(self, skip_first_screenshot=True):
 2. 运行对应离线测试。
 3. 运行 `git diff --check`。
 4. 检查没有删除文件、没有手改生成文件、没有提交 test 或秘密信息。
-5. 需要实机时，从受支持页面和任务调度入口各验证一次，检查日志与结果截图。
+5. 检查每个新 asset 的源图、生成 wrapper 和 import 路径能够互相追溯。
+6. 需要实机时，从受支持页面和任务调度入口各验证一次，检查日志与结果截图。
 
 完成标准不是“理想路径点通”，而是按钮偶尔点击失败、截图偶尔损坏、设备变慢时，流程仍能通过下一帧状态继续推进或明确失败。

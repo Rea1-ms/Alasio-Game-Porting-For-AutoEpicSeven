@@ -29,6 +29,7 @@
 Expected reads:
 
 - `autoepicseven-rules.md`
+- `asset-task-conventions.md`
 - `task-checklist.md`
 - `state-loop-bible.md`
 - `development-lessons.md`
@@ -105,6 +106,23 @@ Expected behavior:
 - updater 命令先请求用户批准。
 - 当前任务入口检查 `aes.py`，不引用旧项目。
 
+### Prompt F: Asset Naming And Entry Lookup
+
+“我要给国际服中文的活动免费召唤补图，asset 应该放哪里、叫什么，生成后又从哪里 import？”
+
+Expected reads:
+
+- `autoepicseven-rules.md` 的 Assets 章节
+- `asset-task-conventions.md`
+
+Expected behavior:
+
+- 先搜索现有 `FREE_GACHA` 语义和 owner，不新建重复名字。
+- 按语言差异选择 `share` 或 `global_cn`，源图只放根目录 `assets/`。
+- 使用 `UPPER_SNAKE_CASE` 和 `.2` / `.SEARCH` 等合法后缀。
+- 根据 module 路径推导 `tasks/<owner>/assets/assets_<module>.py`，生成后显式 from import。
+- 能从 task.yaml、`aes.py`、可选 `entry.py` 继续追到实际状态循环。
+
 ## Edge Cases
 
 - 当前目录不是 worktree：确认真实仓库后再改，不自行创建替代项目。
@@ -117,6 +135,7 @@ Expected behavior:
 
 - [ ] `SKILL.md` 少于 500 行，主要承担路由而不是百科全文
 - [ ] 所有参考文件都由 `SKILL.md` 直接链接，没有多层引用链
+- [ ] asset 命名、目录映射和入口定位只有 `asset-task-conventions.md` 保存详细规则
 - [ ] description 同时包含触发请求、用户关键词和反触发范围
 - [ ] 至少三个 should-trigger 和三个 should-not-trigger 样例
 - [ ] 每个关键决策都有默认选项
