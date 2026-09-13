@@ -1,4 +1,4 @@
 interface:
-  display_name: "ALAS Porting for AutoEpicSeven"
-  short_description: "Develop robust E7 automation with ALAS patterns"
-  default_prompt: "Use $alas-game-porting-for-autoepicseven to develop or review one AutoEpicSeven automation feature."
+  display_name: "Alasio Porting for AutoEpicSeven"
+  short_description: "Port and maintain AutoEpicSeven on Alasio"
+  default_prompt: "Use $alasio-game-porting-for-autoepicseven to migrate, package, develop, or review AutoEpicSeven on Alasio."

@@ -99,16 +99,16 @@ def _execute_feature(self, skip_first_screenshot=True):
 
 ## 7. Config And Scheduler
 
-- [ ] `task.yaml` 定义任务与选项组，并包含 `Scheduler`
-- [ ] `argument.yaml` 定义选项、默认值和校验
-- [ ] `gui.yaml` 定义额外 GUI 文本
-- [ ] `default.yaml` / `override.yaml` 按需要更新
-- [ ] `config_manual.py` 中调度优先级合理
+- [ ] 已先确认当前分支使用 Alasio 配置源还是旧配置源，没有同时改两套生成链
+- [ ] Alasio 分支：`<nav>.tasks.yaml` 定义任务、绑定组和 displays，并包含 `Scheduler`
+- [ ] Alasio 分支：`<nav>.args.yaml` 定义选项、默认值和校验，`<nav>_i18n.json` 翻译完整
+- [ ] Alasio 分支：`module/config_alasio/const.py` 与 `config_manual.py` 的调度优先级同步
+- [ ] 旧分支：`task.yaml`、`argument.yaml`、`gui.yaml`、`default.yaml` 和 `override.yaml` 按需要更新
 - [ ] 当前任务入口加到 `aes.py`
 - [ ] 已确认 TaskName 经 `inflection.underscore()` 后与 `aes.py` 方法名一致
 - [ ] 配置属性使用 `Group_Argument` 扁平名称
 - [ ] 所有支持语言翻译完整，没有占位路径
-- [ ] 运行 config updater 前已请求用户批准
+- [ ] 运行对应 config updater 前已请求用户批准，生成模型与索引未手改
 
 调度顺序默认遵循：重启、短时收取、每日奖励、日常战斗、常规战斗、纯消磨时间。活动收益很高不等于可以绕过页面、服务器和资源安全检查；优先级变化要结合活动有效期和失败影响决定。
 

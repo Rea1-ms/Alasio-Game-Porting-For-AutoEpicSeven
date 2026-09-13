@@ -116,7 +116,11 @@
 
 ## GUI And Config
 
-配置生成有三个层级：task、group、argument。
+先根据仓库是否存在 `module/config_alasio/` 选择配置链，不能在 Alasio 迁移分支继续把旧生成链当作真相源。
+
+Alasio 配置由每个 nav 下的 args YAML、tasks YAML 和 i18n 组成：tasks 绑定组和 GUI displays，args 定义字段与校验，`module/config_alasio/const.py` 生成 model、config 和全局 index。生成物不手改；运行生成器前请求用户批准。调度优先级同时维护在 Alasio const 和旧 `config_manual.py`，保证桥接调度一致。
+
+没有 `module/config_alasio/` 的旧分支仍使用三个层级：task、group、argument。
 
 - `task.yaml` 决定任务包含的组。
 - `argument.yaml` 决定组里的选项及属性。
@@ -124,7 +128,7 @@
 - `gui.yaml` 提供其他界面文本。
 - 生成器输出 args、menu、generated config、template 和 i18n。
 
-只编辑源 YAML，运行生成器刷新产物。新增任务必须带 Scheduler 组，并在 `config_manual.py` 的优先级中选择合理位置。当前 E7 入口写在 `aes.py`。
+只编辑当前配置链的源文件，运行对应生成器刷新产物。新增任务必须带 Scheduler 组，并在调度优先级中选择合理位置。当前 E7 入口写在 `aes.py`。
 
 配置属性以 `Group_Argument` 形式访问；多值更新使用 `multi_set()`。未绑定组读取到的默认值不代表用户配置已绑定，跨任务配置访问要用项目现有完整数据接口。
 

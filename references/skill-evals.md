@@ -1,4 +1,4 @@
-# Skill Evaluation v0.1
+# Skill Evaluation v0.2
 
 本文件用于验证 skill 的触发边界、路由和关键规则是否生效。维护 skill 时先运行这些思维测试，再改 description 或正文。
 
@@ -10,6 +10,12 @@
    - 原因：E7 状态计数与召唤实机排错命中。
 3. “按服务器给 E7 的限时活动页面分流，只支持国际服中文，并接入调度配置。”
    - 原因：页面条件注册、语言 assets、任务配置命中。
+4. “把 AutoEpicSeven 的配置和 worker 迁到最新版 Alasio，并保持现有任务不变。”
+   - 原因：配置桥、worker 生命周期和 Alasio 上游同步命中。
+5. “Python 3.14 能不能用于新版 OCR？请新建隔离环境验证十连识别。”
+   - 原因：AutoEpicSeven 的 Python 迁移、OCR 模型和专项验证命中。
+6. “组装 Windows 便携发行包，并确认更新不会覆盖密码和任务配置。”
+   - 原因：Alasio frontend、webapp、便携 Python 和更新验收命中。
 
 ## Should Not Trigger
 
@@ -19,6 +25,12 @@
    - 原因：与 AutoEpicSeven 和 ALAS 框架无关。
 3. “给 Vite 页面加一个语言切换菜单。”
    - 原因：前端开发，与本 skill 无关。
+4. “给普通 Electron 应用修复 CSP 白屏。”
+   - 原因：没有 AutoEpicSeven 或 Alasio 迁移上下文。
+5. “把另一个 ALAS 游戏项目升级到 Python 3.14。”
+   - 原因：不是 AutoEpicSeven。
+6. “解释 uv 和 pip 的区别。”
+   - 原因：通用依赖管理问题，不涉及本项目迁移。
 
 ## Real Prompt Routes
 
@@ -98,12 +110,14 @@ Expected reads:
 - `autoepicseven-rules.md` 的任务配置与入口章节
 - `task-checklist.md` 的配置章节
 - `wiki-guidance.md` 的 GUI 与 Config 章节
+- `alasio-migration-workflow.md` 的配置与 worker 迁移章节
 
 Expected behavior:
 
-- 修改 task/argument/gui YAML，必要时 default/override。
+- 检测到 `module/config_alasio/` 后修改对应 nav 的 args/tasks YAML，不继续把旧 YAML 当作真相源。
+- 同步 Alasio const 与 `config_manual.py` 的调度优先级。
 - 使用 `SpecialActivity_Option` 扁平配置名。
-- updater 命令先请求用户批准。
+- 对应生成器命令先请求用户批准，不手改生成模型和索引。
 - 当前任务入口检查 `aes.py`，不引用旧项目。
 
 ### Prompt F: Asset Naming And Entry Lookup
@@ -123,12 +137,63 @@ Expected behavior:
 - 根据 module 路径推导 `tasks/<owner>/assets/assets_<module>.py`，生成后显式 from import。
 - 能从 task.yaml、`aes.py`、可选 `entry.py` 继续追到实际状态循环。
 
+### Prompt G: Python 3.14 And OCR
+
+“保持当前 3.10 环境不动，在新目录验证 Python 3.14 和新 OCR 模型是否值得迁移，重点看十连结果。”
+
+Expected reads:
+
+- `alasio-migration-workflow.md` 的依赖阶段
+- `alasio-migration-gotchas.md` 的 Python 与依赖、OCR 模型与十连识别章节
+
+Expected behavior:
+
+- 新建隔离目录，不修改现有 `.venv` 和发行基线。
+- 先重新检查 cp314 wheel，不把 2026-09-12 的状态当永久事实。
+- 把框选定位、十槽切分和模型识别分别评估。
+- 使用同一批真实截图比较准确率、速度和包体，再判断是否迁移。
+
+### Prompt H: Desktop Blank Or Not Found
+
+“Alasio.exe 能打开，但先是白屏，补了一些文件后又显示 Not Found，帮我定位。”
+
+Expected reads:
+
+- `alasio-migration-workflow.md` 的 frontend 与 webapp 阶段
+- `alasio-migration-gotchas.md` 的桌面端与前端章节
+
+Expected behavior:
+
+- 不把白屏和 `Not Found` 视为同一问题。
+- 白屏检查 CSP hash 与 webapp 构建顺序；`Not Found` 检查独立 frontend 产物。
+- 使用 `pnpm package`，不直接跳到 electron-builder。
+- 检查唯一桌面端入口和残留后端进程。
+
+### Prompt I: Release Update
+
+“用新发行包更新我复制出来的安装目录，确认原端口、密码和任务配置都保留。”
+
+Expected reads:
+
+- `alasio-migration-workflow.md` 的发行组装、更新和分批提交章节
+- `alasio-migration-gotchas.md` 的发行与更新章节
+
+Expected behavior:
+
+- 确认测试源是真实安装副本，不是开发仓库副本。
+- 发行组装前直接申请权限，使用完整便携 CPython 和新 ReleaseName。
+- 检查发行包不含实际三份配置，更新前后比较内容、ACL 和属性。
+- 只从 `toolkit/WebApp/Alasio.exe` 启动并跑一个真实任务。
+
 ## Edge Cases
 
 - 当前目录不是 worktree：确认真实仓库后再改，不自行创建替代项目。
 - assets 缺失：停止该识别分支，列出需要用户放置的源图。
 - 测试没有截图：先显式 screenshot 或注入 image_file，不让状态循环复用空帧。
 - 测试权限错误：请求批准，不改用 uv/pytest。
+- linked worktree 暂存或提交：命令执行前直接请求批准，不先制造 `index.lock` 权限错误。
+- Windows 发行组装：命令执行前直接请求批准；失败半成品不覆盖，改用新的发行名。
+- 发行更新目录缺少现有配置：只算首次安装验证，不能宣称用户配置得到保留。
 - 用户要求删除代码：可以删除代码行或状态变量，但仍不删除文件；需要删除文件时说明限制。
 
 ## Quality Gates
@@ -142,3 +207,6 @@ Expected behavior:
 - [ ] 其他游戏项目的名称、路径和源码依赖没有出现在实现指导中
 - [ ] 开发圣经全文位于 `state-loop-bible.md`
 - [ ] AutoEpicSeven 开头约束完整位于 `autoepicseven-rules.md`
+- [ ] Alasio 标准流程和踩坑分别位于两个直接引用的 reference，没有复制过时 roadmap
+- [ ] 迁移配置任务会选择 `module/config_alasio/`，旧配置链仅用于没有该目录的旧分支
+- [ ] `git add` / `git commit` 和发行组装的权限申请发生在首次执行之前

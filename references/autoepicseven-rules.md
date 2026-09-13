@@ -23,6 +23,9 @@
   - `module/config/argument/args.json`
   - `module/config/argument/menu.json`
   - `module/config/config_generated.py`
+  - `module/config_alasio/_index/*`
+  - `module/config_alasio/*/*_model.py`
+  - `module/config_alasio/*/*_config.json`
   - `tasks/*/assets/assets_*.py`
 - assets import 一律使用 `from ... import ...`，与项目现有风格一致。
 - 修改函数名、变量名或类名时，不自行执行全仓搜索替换。先完成可独立修改的代码，再汇总旧名到新名的映射，交给用户通过 IDE 批量重命名。
@@ -33,7 +36,22 @@
 
 ## 任务配置与入口
 
-新增或修改任务时检查以下源文件：
+先检查仓库是否存在 `module/config_alasio/`。存在时默认使用 Alasio 配置源：
+
+- `module/config_alasio/<nav>/<nav>.args.yaml`：组、字段、默认值、类型和选项。
+- `module/config_alasio/<nav>/<nav>.tasks.yaml`：任务、绑定组和 GUI 展示。
+- `module/config_alasio/const.py`：mod entry 与 `SCHEDULER_PRIORITY`。
+- `module/config/config_manual.py`：旧调度器仍读取的 `SCHEDULER_PRIORITY`，与上项同步。
+- `module/config_alasio/<nav>/<nav>_i18n.json`：允许手工维护的翻译文件。
+- `aes.py`：当前任务入口。`src.py` 是保留旧文件，不再作为新增 E7 任务的默认入口。
+
+完成 Alasio YAML 修改后运行：
+
+```powershell
+./.venv/Scripts/python.exe module/config_alasio/const.py
+```
+
+仅在没有 `module/config_alasio/` 的旧分支，才使用旧配置源：
 
 - `module/config/argument/task.yaml`：任务包含哪些选项组，任务必须包含 `Scheduler`。
 - `module/config/argument/argument.yaml`：选项组、选项、默认值、类型和校验。
@@ -43,13 +61,13 @@
 - `module/config/config_manual.py`：`SCHEDULER_PRIORITY` 调度顺序，修改后立即生效。
 - `aes.py`：当前任务入口。`src.py` 是保留旧文件，不再作为新增 E7 任务的默认入口。
 
-完成 YAML 修改后需要运行：
+完成旧 YAML 修改后运行：
 
 ```powershell
-.\.venv\Scripts\python.exe -m module.config.config_updater
+./.venv/Scripts/python.exe -m module.config.config_updater
 ```
 
-运行这条命令前必须请求用户批准；不要先试跑，因为未批准时通常会出现权限错误。生成后检查所有支持语言的 i18n，不留下路径式占位文本。
+运行任一生成器前必须请求用户批准；不要先试跑。生成后检查所有支持语言的 i18n，不留下路径式占位文本，也不手改生成模型和索引。
 
 配置访问使用扁平属性名：
 

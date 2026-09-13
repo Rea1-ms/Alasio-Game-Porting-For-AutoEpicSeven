@@ -1,8 +1,8 @@
-# ALAS-Game-Porting-For-AutoEpicSeven
+# Alasio-Game-Porting-For-AutoEpicSeven
 
-面向 AutoEpicSeven（自动化项目）的 Codex skill（技能），用于开发、移植、审核和调试 ALAS（二代游戏自动化框架）风格的 E7 自动化功能。
+面向 AutoEpicSeven（自动化项目）的 Codex skill（技能），用于把现有项目迁移、打包并维护在 Alasio（自动化框架）上，同时保留 E7（第七史诗）自动化功能开发规范。
 
-当前版本：v0.1（0.1 版本）
+当前版本：v0.2（0.2 版本）
 
 ## 适用范围
 
@@ -12,6 +12,9 @@
 - OCR（光学字符识别）语言、后处理和资源栏识别
 - scheduler（调度器）、配置和 GUI（图形界面）接入
 - 截图测试、实机日志分析和回归检查
+- Alasio（自动化框架）配置桥、worker（工作进程）和上游同步
+- frontend（浏览器前端）、webapp（桌面端）与 Windows（视窗操作系统）便携发行包
+- Python（编程语言）与旧依赖的分批现代化验证
 
 本 skill（技能）面向 AutoEpicSeven（自动化项目）开发，不涉及 E7 游戏攻略、无关自动化项目或普通 Python（编程语言）问题。
 
@@ -26,13 +29,15 @@ skill（技能）已经包含开发所需的状态循环规范、项目约束、
 ## 目录结构
 
 ```text
-alas-game-porting-for-autoepicseven/
+alasio-game-porting-for-autoepicseven/
 ├── README.md
 ├── SKILL.md
 ├── agents/
 │   └── openai.yaml
 └── references/
     ├── autoepicseven-rules.md
+    ├── alasio-migration-workflow.md
+    ├── alasio-migration-gotchas.md
     ├── asset-task-conventions.md
     ├── development-lessons.md
     ├── skill-evals.md
@@ -44,6 +49,8 @@ alas-game-porting-for-autoepicseven/
 - `SKILL.md`：触发说明、任务路由、执行默认值和验收清单。
 - `agents/openai.yaml`：Codex 展示名称、简介和默认调用提示。
 - `references/autoepicseven-rules.md`：AutoEpicSeven（自动化项目）的强制开发约束。
+- `references/alasio-migration-workflow.md`：从上游同步到发行更新验收的标准迁移流程。
+- `references/alasio-migration-gotchas.md`：本次迁移中已经复现的问题、原因与处理方式。
 - `references/asset-task-conventions.md`：asset name（资源名）、目录映射、task（任务）组织和入口定位规范。
 - `references/state-loop-bible.md`：ALAS（自动化框架）状态循环完整规范。
 - `references/task-checklist.md`：新增或重写任务时的检查清单。
@@ -58,7 +65,7 @@ alas-game-porting-for-autoepicseven/
 将仓库克隆到 Codex（智能编程助手）的 skills（技能）目录：
 
 ```powershell
-git clone <skill-repository-url> "$env:CODEX_HOME/skills/alas-game-porting-for-autoepicseven"
+git clone <skill-repository-url> "$env:CODEX_HOME/skills/alasio-game-porting-for-autoepicseven"
 ```
 
 重新启动 Codex（智能编程助手）后即可调用。
@@ -68,11 +75,11 @@ git clone <skill-repository-url> "$env:CODEX_HOME/skills/alas-game-porting-for-a
 在 AutoEpicSeven（自动化项目）根目录执行：
 
 ```powershell
-git submodule add <skill-repository-url> .agents/skills/alas-game-porting-for-autoepicseven
+git submodule add <skill-repository-url> .agents/skills/alasio-game-porting-for-autoepicseven
 git submodule update --init --recursive
 ```
 
-`.agents/skills/alas-game-porting-for-autoepicseven` 是 repository skill（仓库级技能）位置。项目会记录 skill（技能）的具体提交，不会自动跟随远端变化。
+`.agents/skills/alasio-game-porting-for-autoepicseven` 是 repository skill（仓库级技能）位置。项目会记录 skill（技能）的具体提交，不会自动跟随远端变化。
 
 克隆包含该子模块的项目时使用：
 
@@ -91,7 +98,7 @@ git submodule update --init --recursive
 显式调用：
 
 ```text
-使用 $alas-game-porting-for-autoepicseven，为 AutoEpicSeven 新增一个状态驱动的每日任务。
+使用 $alasio-game-porting-for-autoepicseven，为 AutoEpicSeven 迁移一个配置模块并完成发行验证。
 ```
 
 也可以直接描述 AutoEpicSeven（自动化项目）的 task（任务）、Page（页面对象）、assets（识别资源）、OCR（光学字符识别）、调度或测试问题，由触发描述自动加载本 skill（技能）。
