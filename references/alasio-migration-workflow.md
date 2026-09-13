@@ -94,6 +94,25 @@ pnpm 12 使用 `pnpm-workspace.yaml` 中的 `allowBuilds`。依赖构建脚本�
 
 ## 7. 组装 Windows 发行目录
 
+### 当前发行路线的性质
+
+当前采用“完整发行目录 + 发行清单 + 覆盖程序文件”的更新方式，这是 AutoEpicSeven 迁移项目的
+发行选择，不是 Alasio 上游已经完成的方案，也不是新版 Git 强制要求。
+
+选择这条路线是因为一次发行需要组合两个仓库的源码、完整便携 Python、锁定依赖、独立 frontend
+和 webapp，同时必须排除并保护用户的 `deploy.yaml`、`aes.db`、`gui.db`。发行清单记录两个仓库的
+提交号，是为了让二进制产物可追溯；要求 Alasio 提交已经推送，也是“正式发行必须能重新取得源码”
+的项目规则。Git 本身允许从未推送甚至未提交的工作区构建。
+
+Git 的 `safe.directory` 只处理仓库所有者与运行账户不一致；linked worktree 的 `index.lock` 权限错误
+来自当前沙箱无法写外部 git common dir。这两类限制都可以在 Git 更新路线中单独处理，不构成改用
+完整发行包的原因。Git 3.0 计划收紧的 `safe.bareRepository` 也只针对隐式发现的 bare repository，
+普通工作树不受影响。
+
+Alasio 源码中的 `deploy_dev` 已有按 Git 提交生成版本历史、全量包和增量包的方向，但尚未形成可直接
+用于本项目的完整分发链。以后上游更新器成熟时可以重新评估；不要把当前完整目录方案描述成唯一道路
+或上游既定设计。
+
 组装前检查：
 
 - AutoEpicSeven 所有需要进入发行包的 tracked change 已提交。

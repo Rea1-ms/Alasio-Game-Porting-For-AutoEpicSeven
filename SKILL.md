@@ -6,7 +6,7 @@ description: >
 
 # AutoEpicSeven Alasio Game Porting
 
-Version: 0.2 (2026-09-13)
+Version: 0.3 (2026-09-13)
 
 把 AutoEpicSeven 当作已经成熟的 E7 自动化项目，在保留游戏能力的前提下迁移到 Alasio。先读当前仓库、Alasio 依赖版本、git 差异和本 skill 的对应参考资料。
 
